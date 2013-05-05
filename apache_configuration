@@ -1,0 +1,17 @@
+<VirtualHost *:80>
+        DocumentRoot /var/www/cgi-bin/aws-view
+        ServerName CHANGETOFQDN
+        DirectoryIndex view.cgi
+        AddHandler cgi-script .cgi
+         <Files keys.cfg>
+                Order allow,deny
+                Deny from all
+        </Files>
+        <Directory "/var/www/cgi-bin/aws-view">
+            AllowOverride All
+            Options ExecCGI
+            Order allow,deny
+            Allow from all
+        </Directory>
+</VirtualHost>
+
