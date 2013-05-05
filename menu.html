@@ -1,0 +1,16 @@
+<table id="rounded-corner" summary="menu" >
+    <thead>
+    	<tr>
+        	<th scope="col">&nbsp;Keys</th>
+        </tr>
+    </thead>
+
+{% for k in keys %}
+    <tbody>
+    	<tr>
+        	<td>&nbsp;<a href="/?key={{ k }}">{{ k }}</a><br></td>
+        </tr>
+    </tbody>
+{% endfor %}
+
+</table>

@@ -108,10 +108,14 @@ def print_keys(keys, config):
 
 def print_sections(config):
 	
-	ret = '<br>'
-	for sec in config.sections():
-		ret += '<a href="/?key={0}">{0}</a><br>'.format(sec)
-	return ret
+	#ret = '<br>'
+	#for sec in config.sections():
+	#	ret += '<a href="/?key={0}">{0}</a><br>'.format(sec)
+	#return ret
+	THIS_DIR = os.path.dirname(os.path.abspath(__file__))
+	j2_env = Environment(loader=FileSystemLoader(THIS_DIR), trim_blocks=True)
+	return '<p align="center">{0}</p>'.format( j2_env.get_template('menu.html').render( keys=config.sections() ) )
+	
 	
 
 
