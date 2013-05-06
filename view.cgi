@@ -39,11 +39,19 @@ def get_all_envs(instances):
 
 def get_interesting_data(instances):
 	
+	def _compare_by_key(x, y):
+		if x['role'] > y['role']:
+			return 1
+		if x['role'] < y['role']:
+			return -1
+		else:
+			return 0
+	
 	# Init hash
 	ret = {}
 	for env in get_all_envs(instances):
-		ret[env] = {}
-	ret['unknown'] = {}
+		ret[env] = []
+	ret['unknown'] = []
 	
 	# put each instance in its place
 	for instance in instances:
@@ -56,7 +64,8 @@ def get_interesting_data(instances):
 		except KeyError:
 			role = 'unknown'
 		
-		ret[env][instance.__dict__['id']] = {
+		ret[env].append( {
+			'id': instance.__dict__['id'],
 			'role': role,
 			'type': instance.__dict__['root_device_type'],
 			'state': instance.__dict__['_state'],
@@ -66,7 +75,9 @@ def get_interesting_data(instances):
 			'zone': instance.__dict__['_placement'],
 			'launch_time': instance.__dict__['launch_time'],
 			'size': instance.__dict__['instance_type']
-		}
+		} )
+		
+		ret[env].sort(cmp=_compare_by_key)
 	
 	return ret
 
@@ -108,10 +119,6 @@ def print_keys(keys, config):
 
 def print_sections(config):
 	
-	#ret = '<br>'
-	#for sec in config.sections():
-	#	ret += '<a href="/?key={0}">{0}</a><br>'.format(sec)
-	#return ret
 	THIS_DIR = os.path.dirname(os.path.abspath(__file__))
 	j2_env = Environment(loader=FileSystemLoader(THIS_DIR), trim_blocks=True)
 	return '<p align="center">{0}</p>'.format( j2_env.get_template('menu.html').render( keys=config.sections() ) )
