@@ -1,8 +1,8 @@
 <VirtualHost *:80>
         DocumentRoot /var/www/cgi-bin/aws-view
         ServerName CHANGETOFQDN
-        DirectoryIndex view.cgi
-        AddHandler cgi-script .cgi
+        DirectoryIndex view.py
+        AddHandler cgi-script .py
          <Files keys.cfg>
                 Order allow,deny
                 Deny from all
