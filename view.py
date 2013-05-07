@@ -135,6 +135,9 @@ HEADER = """
 @import url("style.css");
 -->
 </style>
+<script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+<script src="js/jquery.tablesorter.js"></script>
+<script src="js/script.js"></script>
 </head>
 <body align="center">
 """
