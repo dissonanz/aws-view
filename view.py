@@ -20,7 +20,7 @@ def get_instances(awskey, awssec):
 	'''
 	
 	ret = []
-	for region in boto.ec2.regions():
+	for region in boto.ec2.regions(aws_access_key_id=awskey, aws_secret_access_key=awssec):
 		conn = boto.ec2.connect_to_region(region.name, aws_access_key_id=awskey, aws_secret_access_key=awssec)
 		reservations = conn.get_all_instances()
 		ret += [i for r in reservations for i in r.instances]
@@ -68,11 +68,11 @@ def get_interesting_data(instances):
 			'id': instance.__dict__['id'],
 			'role': role,
 			'type': instance.__dict__['root_device_type'],
-			'state': instance.__dict__['_state'],
+			'state': instance.__dict__['state'],
 			'keypair': instance.__dict__['key_name'],
 			'private_ip': instance.__dict__['private_ip_address'],
 			'public_ip': instance.__dict__['ip_address'],
-			'zone': instance.__dict__['_placement'],
+			'zone': instance.__dict__['placement'],
 			'launch_time': instance.__dict__['launch_time'],
 			'size': instance.__dict__['instance_type']
 		} )
